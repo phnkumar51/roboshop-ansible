@@ -2,7 +2,7 @@
   hosts: all
   become: true
   tasks:
-    - name: Disable Default Ngi
+    - name: Disable Default Nginx
       ansible.builtin.shell: dnf module disable nginx -y
 
     - name: Enable Nginx 24
@@ -11,7 +11,7 @@
     - name: Install Nginx
       ansible.builtin.dnf:
         name: nginx
-        state: Installed
+        state: installed
 
     - name: Start Nginx Service
       ansible.builtin.systemd_service:
