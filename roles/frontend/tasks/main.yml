@@ -9,7 +9,7 @@
         name: nginx
         state: installed
 
-    - name: Copy Nginx configuration file
+    - name: Copy nginx configuration file
       ansible.builtin.copy:
         src: nginx.conf
         dest: /etc/nginx/nginx.conf
@@ -24,7 +24,7 @@
         path: /usr/share/nginx/html
         state: directory
 
-    - name: Download the app content and extract app content
+    - name: Download and extract app content
       ansible.builtin.unarchive:
          src: https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip
          dest: /usr/share/nginx/html
