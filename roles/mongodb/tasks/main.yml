@@ -1,0 +1,42 @@
+
+- name: Copy Mongodb Repo file
+  ansible.builtin.copy:
+    src: mongo.repo
+    dest: /etc/yum.repos.d/mongo.repo
+
+- name: Install Mongodb
+  ansible.builtin.dnf:
+    name: mongodb-org
+    state: installed
+
+- name: Replace the port address from 127.0.0.1 to 0.0.0.0
+  ansible.builtin.replace:
+    path: /etc/mongod.conf
+    regexp: '127.0.0.1'
+    replace: '0.0.0.0'
+
+- name: Restart the service of mongodb
+  ansible.builtin.systemd_service:
+    name: mongod
+    state: started
+    enabled: yes
+
+
+
+
+
+
+
+
+
+
+#print_head Install mysql server
+#dnf install mysql-server -y &>>$log_file
+
+
+#print_head enable and restart mysql
+#systemctl enable mysqld
+#systemctl restart mysqld
+
+#print_head Setup roboshop Root password
+#mysql_secure_installation --set-root-pass RoboShop@1 &>>$log_file
