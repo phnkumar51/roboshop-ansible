@@ -1,4 +1,4 @@
-- name: frontend setup
+- name: Frontend setup
   hosts: all
   become: true
   roles:
