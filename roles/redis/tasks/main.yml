@@ -1,0 +1,28 @@
+#print_head Restart Redis
+#systemctl enable redis
+#systemctl restart redis
+
+- name: Disable the default version adn enable the latest version of Redis
+  ansible.builtin.shell: dnf module disable redis -y ; dnf module enable redis:7 -y
+
+- name: Install Redis
+  ansible.builtin.dnf:
+    name: Redis
+
+- name: Replace 127.0.0.1 to 0.0.0.0
+  ansible.builtin.replace:
+    path: /etc/redis/redis.conf
+    regexp: '127.0.0.1'
+    replace: '0.0.0.0'
+
+- name: Replace protected-mode yes to protected-mode no
+  ansible.builtin.replace:
+    path: /etc/redis/redis.conf
+    regexp: 'protected-mode yes'
+    replace: 'protected-mode no'
+
+- name: Start Redis services
+  ansible.builtin.systemd_service:
+    name: redis
+    state: restarted
+    enable: yes

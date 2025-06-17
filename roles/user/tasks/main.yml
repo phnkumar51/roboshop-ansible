@@ -1,0 +1,20 @@
+# nodejs_app_setup
+
+
+    artifact_download
+    cd /app
+    
+    print_head Install Nodejs dependencies
+    npm install &>>$log_file
+    systemd_setup
+}
+- name: Disable and enable nodejs 20
+  ansible.builtin.shell: dnf module disable nodejs -y ; dnf module enable nodejs:20 -y;
+
+- name: Install nodejs
+  ansible.builtin.dnf:
+    name: nodejs
+
+- name: Include task list in play
+  ansible.builtin.include_tasks:
+    file: nodejs.yml
