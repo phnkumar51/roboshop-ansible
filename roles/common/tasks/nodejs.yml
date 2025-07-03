@@ -1,11 +1,7 @@
-# nodejs(){
 
-#   artifact_download
-#cd /app
-#   print_head Install Nodejs dependencies
-#npm install &>>$log_file
-#systemd_setup
-#}
+#    print_head Install Nodejs dependencies
+#    npm install &>>$log_file
+#    systemd_setup
 -
 - name: Disable default nodejs and Enable nodejs 20
   ansible.builtin.shell: dnf module disable nodejs -y ; dnf module enable nodejs:20 -y;
@@ -15,6 +11,11 @@
     name: nodejs
     state: installed
 
+- name: Include artifact_download
+  ansible.builtin.include_tasks:
+    file: nodejs.yml
 
+- name: Install nodejs dependencies
+  ansible.builtin.shell: npm install
 
 

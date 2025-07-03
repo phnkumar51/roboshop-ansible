@@ -1,23 +1,21 @@
-
 - name: Add the user
   ansible.builtin.user:
     name: useradd
 
 - name: Recursively remove directory
   ansible.builtin.file:
-    path: https://roboshop-artifacts.s3.amazonaws.com
+    path: /app
     state: absent
 
 - name: Create an app directory content
   ansible.builtin.file:
-    path: https://roboshop-artifacts.s3.amazonaws.com
+    path: /app
+    state: directory
 
 - name: Download app content and unzip the file
   ansible.builtin.unarchive:
-    src: https://roboshop-artifacts.s3.amazonaws.com
+    src: https://roboshop-artifacts.s3.amazonaws.com/{{ component_name}}-v3.zip
     dest: /app
     remote_src: yes
 
-- name: Include task list in play
-  ansible.builtin.include_tasks:
-      file: nodejs.yml
+-
